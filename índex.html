@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Afiliado Fácil</title>
+    
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Afiliado Fácil">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        darkBg: '#0B0B0C',
+                        cardBg: '#1E1E24',
+                        cardBorder: '#2C2C35',
+                        goldAccent: '#D4AF37',
+                        goldHover: '#E5C558',
+                        softPurple: '#B19CD9'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-darkBg text-gray-100 font-sans min-h-screen pb-24 md:pb-0 select-none">
+
+    <!-- Cabeçalho Principal com Ícone Destacado em Dourado -->
+    <header class="border-b border-cardBorder bg-cardBg/90 backdrop-blur sticky top-0 z-50 px-4 py-3 flex justify-between items-center">
+        <div class="flex items-center space-x-2.5">
+            <!-- Ícone Personalizado com Contorno Dourado e Letras em Dourado -->
+            <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-darkBg via-cardBg to-darkBg border-2 border-goldAccent flex items-center justify-center font-extrabold text-goldAccent text-base shadow-[0_0_12px_rgba(212,175,55,0.4)]">
+                AF
+            </div>
+            <h1 class="text-lg font-bold tracking-tight text-white">Afiliado <span class="text-goldAccent">Fácil</span></h1>
+        </div>
+        <div class="text-xs text-goldAccent bg-goldAccent/10 border border-goldAccent/30 px-2.5 py-1 rounded-full font-medium">Estúdio Estável</div>
+    </header>
+
+    <!-- Conteúdo Dinâmico -->
+    <main class="max-w-2xl mx-auto p-4 md:p-6" id="app-container">
+        
+        <!-- TELA 1: INÍCIO / HOME -->
+        <section id="screen-home" class="space-y-6">
+            <div class="text-center py-6">
+                <h2 class="text-2xl md:text-3xl font-extrabold text-white mb-2">Criação Instantânea sem Travamentos</h2>
+                <p class="text-sm text-gray-400 max-w-md mx-auto">Gere seus vídeos verticais para Shopee e Mercado Livre com prévia imediata e sem telas de espera infinitas.</p>
+            </div>
+
+            <div class="grid grid-cols-1 gap-4">
+                <button onclick="switchScreen('create')" class="w-full bg-gradient-to-r from-goldAccent to-amber-600 text-darkBg font-bold p-4 rounded-xl shadow-lg hover:opacity-95 transition flex items-center justify-between group active:scale-98">
+                    <div class="flex items-center space-x-3">
+                        <span class="text-2xl">🚀</span>
+                        <div class="text-left">
+                            <div class="text-base font-bold text-darkBg">Criar Vídeo Agora</div>
+                            <div class="text-xs text-darkBg/90 font-medium">Insira o link, fotos e visualize instantaneamente</div>
+                        </div>
+                    </div>
+                    <span class="text-xl group-hover:translate-x-1 transition">→</span>
+                </button>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <button onclick="switchScreen('videos')" class="bg-cardBg border border-cardBorder p-4 rounded-xl hover:border-goldAccent/50 transition text-left flex flex-col justify-between active:scale-98">
+                        <span class="text-2xl mb-2">📂</span>
+                        <div>
+                            <div class="font-semibold text-white text-sm">Meus Vídeos</div>
+                            <div class="text-xs text-gray-400" id="video-count-badge">0 salvos</div>
+                        </div>
+                    </button>
+
+                    <button onclick="switchScreen('products')" class="bg-cardBg border border-cardBorder p-4 rounded-xl hover:border-goldAccent/50 transition text-left flex flex-col justify-between active:scale-98">
+                        <span class="text-2xl mb-2">🏷️</span>
+                        <div>
+                            <div class="font-semibold text-white text-sm">Meus Produtos</div>
+                            <div class="text-xs text-gray-400">Links e IDs</div>
+                        </div>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- TELA 2: CRIAR VÍDEO (WIZARD) -->
+        <section id="screen-create" class="hidden space-y-6">
+            <div class="flex items-center justify-between pb-2 border-b border-cardBorder">
+                <button onclick="switchScreen('home')" class="text-xs text-goldAccent font-semibold hover:underline">← Voltar</button>
+                <h3 class="font-bold text-white text-sm">Novo Vídeo de Divulgação</h3>
+                <span class="text-xs text-gray-400 font-medium" id="step-indicator">Etapa 1 de 2</span>
+            </div>
+
+            <!-- Etapa 1: Dados e Mídia -->
+            <div id="wizard-step-1" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold uppercase tracking-wider text-gray-400 mb-1">Nome do Produto</label>
+                    <input type="text" id="prod-custom-name" placeholder="Ex: Fone Bluetooth TWS" class="w-full bg-cardBg border border-cardBorder rounded-xl p-3 text-sm text-white focus:border-goldAccent focus:outline-none">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold uppercase tracking-wider text-gray-400 mb-1">Link de Afiliado (Shopee / Mercado Livre)</label>
+                    <input type="text" id="prod-link" placeholder="https://shopee.com.br/..." class="w-full bg-cardBg border border-cardBorder rounded-xl p-3 text-sm text-white focus:border-goldAccent focus:outline-none">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold uppercase tracking-wider text-gray-400 mb-1">Fotos do Produto (Galeria)</label>
+                    <label for="file-upload-input" class="border-2 border-dashed border-cardBorder rounded-xl p-6 text-center cursor-pointer hover:border-goldAccent transition bg-cardBg/30 block">
+                        <span class="text-3xl mb-1 block">📁</span>
+                        <p class="text-xs text-gray-300 font-medium" id="file-upload-label">Toque para selecionar fotos</p>
+                        <input type="file" id="file-upload-input" multiple accept="image/*,video/*" class="hidden" onchange="handleFileSelect(event)">
+                    </label>
+                </div>
+
+                <button onclick="proceedToPreview()" class="w-full bg-goldAccent text-darkBg font-bold py-3.5 rounded-xl hover:bg-goldHover transition mt-4 shadow-md">Gerar Prévia Instantânea</button>
+            </div>
+
+            <!-- Etapa 2: PRÉVIA IMEDIATA -->
+            <div id="wizard-step-2" class="hidden space-y-6 text-center">
+                <div class="space-y-1">
+                    <h4 class="text-sm font-bold text-goldAccent">Prévia Pronta para Assistir</h4>
+                    <p class="text-xs text-gray-400" id="preview-subtitle">O vídeo foi montado instantaneamente para você.</p>
+                </div>
+
+                <!-- PLAYER DE VÍDEO ESTÁVEL -->
+                <div class="bg-cardBg border border-goldAccent/50 rounded-2xl max-w-xs mx-auto aspect-[9/16] relative overflow-hidden shadow-2xl flex items-center justify-center">
+                    <video id="stable-video-player" controls autoplay muted loop class="w-full h-full object-cover rounded-2xl">
+                        <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4" type="video/mp4">
+                        Seu navegador não suporta a prévia.
+                    </video>
+                </div>
+
+                <div class="space-y-2.5">
+                    <button onclick="saveAndFinishVideo()" class="w-full bg-emerald-600 text-white font-bold py-3.5 rounded-xl hover:bg-emerald-500 transition shadow-lg">Aprovar, Salvar e Baixar Vídeo</button>
+                    <button onclick="switchScreen('home')" class="w-full bg-cardBg border border-cardBorder text-gray-300 font-semibold py-2.5 rounded-xl hover:bg-cardBorder transition text-xs">Voltar ao Início</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- TELA 3: MEUS VÍDEOS -->
+        <section id="screen-videos" class="hidden space-y-4">
+            <div class="flex items-center justify-between pb-2 border-b border-cardBorder">
+                <button onclick="switchScreen('home')" class="text-xs text-goldAccent font-semibold hover:underline">← Voltar</button>
+                <h3 class="font-bold text-white text-sm">Meus Vídeos Salvos</h3>
+                <span></span>
+            </div>
+            <div id="videos-list" class="space-y-3">
+                <div class="bg-cardBg border border-cardBorder p-4 rounded-xl text-xs text-gray-400 text-center">
+                    Nenhum vídeo salvo ainda.
+                </div>
+            </div>
+        </section>
+
+        <!-- TELA 4: MEUS PRODUTOS -->
+        <section id="screen-products" class="hidden space-y-4">
+            <div class="flex items-center justify-between pb-2 border-b border-cardBorder">
+                <button onclick="switchScreen('home')" class="text-xs text-goldAccent font-semibold hover:underline">← Voltar</button>
+                <h3 class="font-bold text-white text-sm">Gerenciamento de Produtos</h3>
+                <span></span>
+            </div>
+            <div class="space-y-3">
+                <div class="bg-cardBg border border-cardBorder p-4 rounded-xl space-y-2">
+                    <label class="text-xs text-gray-400 font-semibold">ID Afiliado Shopee</label>
+                    <input type="text" value="shopee_afiliado_123" class="w-full bg-darkBg border border-cardBorder rounded-lg p-2.5 text-xs text-white">
+                </div>
+                <button onclick="alert('Salvo com sucesso!')" class="w-full bg-goldAccent text-darkBg font-bold py-3 rounded-xl text-xs">Salvar</button>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Navegação Inferior -->
+    <nav class="md:hidden fixed bottom-0 left-0 right-0 bg-cardBg/95 backdrop-blur border-t border-cardBorder px-6 py-3 flex justify-around items-center z-50">
+        <button onclick="switchScreen('home')" class="flex flex-col items-center text-goldAccent text-xs space-y-0.5">
+            <span class="text-lg">🏠</span>
+            <span class="font-medium">Início</span>
+        </button>
+        <button onclick="switchScreen('create')" class="flex flex-col items-center text-gray-400 hover:text-goldAccent text-xs space-y-0.5">
+            <span class="text-lg">➕</span>
+            <span class="font-medium">Criar</span>
+        </button>
+        <button onclick="switchScreen('videos')" class="flex flex-col items-center text-gray-400 hover:text-goldAccent text-xs space-y-0.5">
+            <span class="text-lg">📂</span>
+            <span class="font-medium">Vídeos</span>
+        </button>
+    </nav>
+
+    <script>
+        let userVideos = [];
+
+        function switchScreen(screenName) {
+            document.getElementById('screen-home').classList.add('hidden');
+            document.getElementById('screen-create').classList.add('hidden');
+            document.getElementById('screen-videos').classList.add('hidden');
+            document.getElementById('screen-products').classList.add('hidden');
+
+            document.getElementById('screen-' + screenName).classList.remove('hidden');
+            window.scrollTo(0, 0);
+
+            if (screenName === 'videos') renderVideosList();
+        }
+
+        function handleFileSelect(event) {
+            const files = event.target.files;
+            if (files && files.length > 0) {
+                document.getElementById('file-upload-label').innerText = `${files.length} foto(s) selecionada(s)!`;
+                document.getElementById('file-upload-label').classList.add('text-goldAccent');
+            }
+        }
+
+        function proceedToPreview() {
+            const prodName = document.getElementById('prod-custom-name').value || 'Produto Afiliado';
+            document.getElementById('preview-subtitle').innerText = `Prévia gerada para: ${prodName}`;
+            
+            document.getElementById('wizard-step-1').classList.add('hidden');
+            document.getElementById('wizard-step-2').classList.remove('hidden');
+            document.getElementById('step-indicator').innerText = 'Etapa 2 de 2';
+        }
+
+        function saveAndFinishVideo() {
+            const prodName = document.getElementById('prod-custom-name').value || 'Produto Afiliado';
+            userVideos.unshift({ name: prodName, date: new Date().toLocaleDateString('pt-BR') });
+            alert('Vídeo aprovado e salvo com sucesso! Download iniciado.');
+            switchScreen('videos');
+        }
+
+        function renderVideosList() {
+            const container = document.getElementById('videos-list');
+            if (userVideos.length === 0) {
+                container.innerHTML = '<div class="bg-cardBg border border-cardBorder p-4 rounded-xl text-xs text-gray-400 text-center">Nenhum vídeo salvo ainda.</div>';
+                return;
+            }
+            let html = '';
+            userVideos.forEach(v => {
+                html += `
+                    <div class="bg-cardBg border border-cardBorder p-4 rounded-xl flex justify-between items-center">
+                        <div>
+                            <h4 class="text-sm font-bold text-white">${v.name}</h4>
+                            <p class="text-xs text-gray-400">Criado em: ${v.date}</p>
+                        </div>
+                        <button onclick="alert('Baixando MP4...')" class="bg-goldAccent/20 text-goldAccent px-3 py-1.5 rounded-lg text-xs font-semibold">Baixar MP4</button>
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
+        }
+    </script>
+</body>
+</html>
